@@ -174,8 +174,8 @@
 				this.listLoading = true;
 				//NProgress.start();
 				getUserListPage(para).then((res) => {
-					this.total = res.data.total;
-					this.users = res.data.users;
+					this.total = res.data.data.total;
+					this.users = res.data.data.list;
 					this.listLoading = false;
 					//NProgress.done();
 				});
@@ -187,14 +187,22 @@
 				}).then(() => {
 					this.listLoading = true;
 					//NProgress.start();
-					let para = { id: row.id };
+					let para = { ids: row.id };
 					removeUser(para).then((res) => {
 						this.listLoading = false;
 						//NProgress.done();
-						this.$message({
-							message: '删除成功',
-							type: 'success'
-						});
+						let { errno, errmsg, data } = res.data;
+						if (errno !== 0) {
+							this.$message({
+								message: errmsg,
+								type: 'error'
+							});
+						}else{
+							this.$message({
+								message: '删除成功',
+								type: 'success'
+							});
+						}
 						this.getUsers();
 					});
 				}).catch(() => {
@@ -229,10 +237,19 @@
 							editUser(para).then((res) => {
 								this.editLoading = false;
 								//NProgress.done();
-								this.$message({
-									message: '提交成功',
-									type: 'success'
-								});
+								let { errno, errmsg, data } = res.data;
+								console.log(errmsg)
+								if (errno !== 0) {
+									this.$message({
+										message: errmsg,
+										type: 'error'
+									});
+								}else{
+									this.$message({
+										message: '提交成功',
+										type: 'success'
+									});
+								}
 								this.$refs['editForm'].resetFields();
 								this.editFormVisible = false;
 								this.getUsers();
@@ -253,10 +270,18 @@
 							addUser(para).then((res) => {
 								this.addLoading = false;
 								//NProgress.done();
-								this.$message({
-									message: '提交成功',
-									type: 'success'
-								});
+								let { errno, errmsg, data } = res.data;
+								if (errno !== 0) {
+									this.$message({
+										message: errmsg,
+										type: 'error'
+									});
+								}else{
+									this.$message({
+										message: '提交成功',
+										type: 'success'
+									});
+								}
 								this.$refs['addForm'].resetFields();
 								this.addFormVisible = false;
 								this.getUsers();
