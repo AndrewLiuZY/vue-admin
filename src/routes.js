@@ -37,7 +37,7 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '导航二',
+        name: 'charts',
         iconCls: 'el-icon-message',//图标样式class
         children: [
             { path: '/main', component: Main, name: '主页', hidden: true },
