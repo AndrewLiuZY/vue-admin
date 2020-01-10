@@ -35,6 +35,16 @@ let routes = [
         ]
     },
     {
+        path: '/',
+        component: Home,
+        name: '导航二',
+        iconCls: 'el-icon-message',//图标样式class
+        children: [
+            { path: '/main', component: Main, name: '主页', hidden: true },
+            { path: '/echarts', component: echarts, name: 'echarts' },
+        ]
+    },
+    {
         path: '*',
         hidden: true,
         redirect: { path: '/404' }
